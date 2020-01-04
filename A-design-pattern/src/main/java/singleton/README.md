@@ -44,7 +44,7 @@ public class SingletonHungry2 {
 ```
 #### UML
 ![](../../../../source/singleton/SingletonHungry2.png)
-##懒汉式单例
+## 懒汉式单例
 懒汉式的单例是指当类加载的时候，类并没有初始化，当外部内调用到的时候才会初始化并创建实例；线程不安全，需要考虑多线程并发问题。  
 ### 优点：
 - 外部调用时才会初始化并创建实例，不浪费JVM空间
@@ -123,7 +123,7 @@ public class LazyInnerClass {
 ```
 #### UML
 ![](../../../../source/singleton/LazyInnerClass.png)
-##枚举式单例
+## 枚举式单例
 枚举式的单例属于注册式单例中的一种；是指将每一个实例都登记到某一个地方，使用唯一的标 识获取实例。  
 ### 优点：
 - 线程安全
