@@ -11,7 +11,7 @@ public class LazyInnerClass {
 
     private static LazyInnerClass lazyInnerClass;
 
-    private LazyInnerClass(){
+    private LazyInnerClass(){//防反射破坏单例
         if(lazyInnerClass != null){
             throw new RuntimeException("实例已存在");
         }
@@ -28,7 +28,7 @@ public class LazyInnerClass {
         private static final LazyInnerClass INSTANCE = new LazyInnerClass();
     }
 
-    public void readResolve(){
+    public void readResolve(){//防序例化破坏单例
         if(lazyInnerClass == null){
             lazyInnerClass = HolderClass.INSTANCE;
         }

@@ -12,7 +12,7 @@ public class LazyDoubleCheckSingleton {
     private static LazyDoubleCheckSingleton lazyDoubleCheckSingleton;
 
     private LazyDoubleCheckSingleton() {
-        if(lazyDoubleCheckSingleton != null){
+        if(lazyDoubleCheckSingleton != null){//防反射破坏单例
             throw new RuntimeException("实例已存在");
         }
     }
@@ -28,7 +28,7 @@ public class LazyDoubleCheckSingleton {
         return lazyDoubleCheckSingleton;
     }
 
-    public void readResolve(){
+    public void readResolve(){//防序例化破坏单例
         if (lazyDoubleCheckSingleton == null) {
             synchronized (LazyDoubleCheckSingleton.class) {
                 if (lazyDoubleCheckSingleton == null) {
