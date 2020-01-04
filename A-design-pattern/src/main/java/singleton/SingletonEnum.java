@@ -6,15 +6,24 @@ package singleton;
  * @Description:
  * @date 2020/1/5 1:12
  */
-public enum  SingletonEnum {
-    INSTANCE;
-    private DataSource dataSource;
+public class SingletonEnum {
 
-    public DataSource getInstance(){
-        return this.dataSource;
+    private SingletonEnum(){}
+
+    public static SingletonEnum getInstance(){
+        return InnerEnum.INSTANCE.getInstance();
     }
 
-    SingletonEnum(){
-        this.dataSource = new DataSource();
+    private enum  InnerEnum {
+        INSTANCE;
+        private SingletonEnum singletonEnum;
+
+        public SingletonEnum getInstance(){
+            return this.singletonEnum;
+        }
+
+        InnerEnum(){
+            this.singletonEnum = new SingletonEnum();
+        }
     }
 }

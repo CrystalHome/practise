@@ -13,11 +13,12 @@ public class Execute implements Runnable {
 
     @Override
     public void run() {
-        threadObj = LazyInnerClass.getInstance();
+        threadObj = SingletonEnum.getInstance();
+//        threadObj = LazyInnerClass.getInstance();
 //        threadObj = LazyDoubleCheckSingleton.getInstance();
 //        threadObj = SingletonHungry2.getInstance();
 //        threadObj = SingletonHungry.getInstance();
-        System.out.println(Thread.currentThread().getName()+":"+threadObj);
+        System.out.println(Thread.currentThread().getName()+":"+threadObj.hashCode()+":"+threadObj);
     }
 
     public static Object getObject(){

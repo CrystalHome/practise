@@ -1,6 +1,6 @@
 # 设计模式—单例模式
 单例模式(Singleton Pattern)是指一个类在何情况下，都保证JVM中有且只有一个单实例，并提供一个全局访问点。  
-`单例模式是创建弄模式`  
+`单例模式是创建型模式`  
 ## 饿汉式单例
 饿汉式的单例是指当类加载的时候立即初始化并创建实例；线程安全。
 ### 优点：
@@ -125,23 +125,35 @@ public class LazyInnerClass {
 ![](../../../../source/singleton/LazyInnerClass.png)
 ## 枚举式单例
 枚举式的单例属于注册式单例中的一种；是指将每一个实例都登记到某一个地方，使用唯一的标 识获取实例。  
+Java规范规定，每个枚举类型及其定义的枚举变量在JVM中都是唯一的，因此在枚举类型的序列化和反序列化上，Java做了特殊的规定。在序列化的时候Java仅仅是将枚举对象的name属性输到结果中，反序列化的时候则是通过java.lang.Enum的valueOf()方法来根据名字查找枚举对象。也就是说，序列化的时候只将DATASOURCE这个名称输出，反序列化的时候再通过这个名称，查找对应的枚举类型，因此反序列化后的实例也会和之前被序列化的对象实例相同
+  
 ### 优点：
-- 线程安全
 - 执行效率高
+- 实现简单
+- 线程安全,枚举本身就是单例模式。由JVM从根本上提供保障,避免通过反射和反序列化的漏洞
 ### 缺点：
 - 无论该单例类是否使用都会创建实例，浪费JVM内在空间
 ### 枚举式单例写法
 ```java
-public enum  SingletonEnum {
-    INSTANCE;
-    private DataSource dataSource;
+public class SingletonEnum {
 
-    public DataSource getInstance(){
-        return this.dataSource;
+    private SingletonEnum(){}
+
+    public static SingletonEnum getInstance(){
+        return InnerEnum.INSTANCE.getInstance();
     }
 
-    SingletonEnum(){
-        this.dataSource = new DataSource();
+    private enum  InnerEnum {
+        INSTANCE;
+        private SingletonEnum singletonEnum;
+
+        public SingletonEnum getInstance(){
+            return this.singletonEnum;
+        }
+
+        InnerEnum(){
+            this.singletonEnum = new SingletonEnum();
+        }
     }
 }
 ```

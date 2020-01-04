@@ -13,7 +13,16 @@ public class SingletonTest {
 //        singletonHungryTest();
 //        singletonHungry2Test();
 //        lazyDoubleCheckSingletonTest();
-        LazyInnerClassTest();
+//        LazyInnerClassTest();
+        SingletonEnumTest();
+        Thread t1 = new Thread(new Execute());
+        Thread t2 = new Thread(new Execute());
+        t1.start();
+        t2.start();
+        System.out.println("==");
+    }
+
+    public static void SingletonEnumTest(){
 
     }
 
