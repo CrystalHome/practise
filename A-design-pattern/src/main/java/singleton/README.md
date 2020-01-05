@@ -133,9 +133,17 @@ public class LazyInnerClass {
 - 无论该单例类是否使用都会创建实例，浪费JVM内在空间
 ### 枚举式单例写法
 ```java
-public class SingletonEnum {
+public class SingletonEnum implements Serializable {
 
-    private SingletonEnum(){}
+    private SingletonEnum(){//防反射破坏单例
+        if(InnerEnum.INSTANCE != null){
+            throw new RuntimeException("实例已存在");
+        }
+    }
+
+    public Object readResolve(){//防序例化破坏单例
+        return InnerEnum.INSTANCE.getInstance();
+    }
 
     public static SingletonEnum getInstance(){
         return InnerEnum.INSTANCE.getInstance();
@@ -145,12 +153,12 @@ public class SingletonEnum {
         INSTANCE;
         private SingletonEnum singletonEnum;
 
-        public SingletonEnum getInstance(){
-            return this.singletonEnum;
-        }
-
         InnerEnum(){
             this.singletonEnum = new SingletonEnum();
+        }
+
+        public SingletonEnum getInstance(){
+            return this.singletonEnum;
         }
     }
 }
